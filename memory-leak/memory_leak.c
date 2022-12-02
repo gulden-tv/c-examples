@@ -7,7 +7,7 @@ list *memlist = NULL;
 #undef malloc 
 #undef free
 
-void insert(void *address, size_t size, char *comment) {
+static void insert(void *address, size_t size, char *comment) {
     list *tmp = malloc(sizeof(list));
     tmp->next = memlist;
     tmp->address = address;
@@ -15,7 +15,7 @@ void insert(void *address, size_t size, char *comment) {
     sprintf(tmp->comment,"%s",comment);
     memlist = tmp;
 }
-_Bool delete(void *address) {
+static _Bool delete(void *address) {
     if(memlist == NULL)
         return 0;
     list *del = NULL;

@@ -13,9 +13,9 @@ struct list {
     struct list *next;
 }; 
 
-void insert(void *, size_t, char *);
+static void insert(void *, size_t, char *);
 
-_Bool delete(void *);
+static _Bool delete(void *);
 
 void printList();
  
