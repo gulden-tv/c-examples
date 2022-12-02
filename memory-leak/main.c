@@ -10,6 +10,6 @@ int main(void) {
     p = malloc(sizeof(int));
  
     // free(p); // try to comment this and uncomment
-    printList();
+    printMemoryLeak();
     return 0;
 }

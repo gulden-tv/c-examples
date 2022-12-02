@@ -37,7 +37,7 @@ static _Bool delete(void *address) {
     }
     return 0;
 }
-void printList() {
+void printMemoryLeak() {
     list *head = memlist;
     if(head == NULL) {
         printf("No memory leak detect\n");

@@ -17,7 +17,7 @@ static void insert(void *, size_t, char *);
 
 static _Bool delete(void *);
 
-void printList();
+void printMemoryLeak();
  
 void* my_malloc(size_t size, const char *, int, const char *);
 
