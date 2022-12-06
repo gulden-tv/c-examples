@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include "memory_leak.h"
 
-list *memlist = NULL;
+static list *memlist = NULL;
+static size_t maxMemoryAllocated = 0;
 
 #undef malloc 
 #undef free
@@ -14,6 +15,10 @@ static void insert(void *address, size_t size, char *comment) {
     tmp->size = size;
     sprintf(tmp->comment,"%s",comment);
     memlist = tmp;
+    size_t total = totalMemoryAllocate(memlist);
+    if (maxMemoryAllocated < total) {
+        maxMemoryAllocated = total;
+    }
 }
 static _Bool delete(void *address) {
     if(memlist == NULL)
@@ -46,6 +51,7 @@ void printMemoryLeak() {
         printf("%s\n",head->comment);
         head = head->next;
     }
+    printf("Max memory allocate is %zu bytes\n", maxMemoryAllocated);
 }
  
 void* my_malloc(size_t size, const char *file, int line, const char *func)
@@ -63,3 +69,11 @@ void my_free(void *ptr, const char *file, int line, const char *func)
         free(ptr);
 }
 
+static size_t totalMemoryAllocate(list *head) {
+    size_t max = 0;
+    while(head) {
+        max += head->size;
+        head = head->next;
+    }
+    return max;
+}

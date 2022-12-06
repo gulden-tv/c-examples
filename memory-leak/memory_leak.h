@@ -23,6 +23,8 @@ void* my_malloc(size_t size, const char *, int, const char *);
 
 void my_free(void *, const char *, int line, const char *);
 
+static size_t totalMemoryAllocate(list *);
+
 #define malloc(X) my_malloc( (X), __FILE__, __LINE__, __FUNCTION__)
 #define free(X) my_free( (X), __FILE__, __LINE__, __FUNCTION__)
 
