@@ -13,9 +13,9 @@ struct list {
     struct list *next;
 }; 
 
-static void insert(void *, size_t, char *);
+static void insert_block(void *, size_t, char *);
 
-static _Bool delete(void *);
+static _Bool delete_block(void *);
 
 void printMemoryLeak();
  

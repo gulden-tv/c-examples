@@ -8,7 +8,7 @@ static size_t maxMemoryAllocated = 0;
 #undef malloc 
 #undef free
 
-static void insert(void *address, size_t size, char *comment) {
+static void insert_block(void *address, size_t size, char *comment) {
     list *tmp = malloc(sizeof(list));
     tmp->next = memlist;
     tmp->address = address;
@@ -20,7 +20,7 @@ static void insert(void *address, size_t size, char *comment) {
         maxMemoryAllocated = total;
     }
 }
-static _Bool delete(void *address) {
+static _Bool delete_block(void *address) {
     if(memlist == NULL)
         return 0;
     list *del = NULL;
@@ -59,13 +59,13 @@ void* my_malloc(size_t size, const char *file, int line, const char *func)
     void *ptr = malloc(size);
     char coment[64] = {0};
     sprintf (coment,"Allocated = %s, %i, %s, %p[%li]", file, line, func, ptr, size);
-    insert(ptr,size,coment);
+    insert_block(ptr,size,coment);
     
     return ptr;
 }
 void my_free(void *ptr, const char *file, int line, const char *func)
  {
-    if(!delete(ptr))
+    if(!delete_block(ptr))
         free(ptr);
 }
 
