@@ -7,6 +7,7 @@ static size_t maxMemoryAllocated = 0;
 
 #undef malloc 
 #undef free
+#undef realloc
 
 static void insert_block(void *address, size_t size, char *comment) {
     list *tmp = malloc(sizeof(list));
@@ -39,6 +40,19 @@ static _Bool delete_block(void *address) {
             return 1;
         }
         tmp=tmp->next;
+    }
+    return 0;
+}
+static _Bool update_block(void *oldptr, void *newptr, size_t newsize, char *comment) {
+    list *tmp = memlist;
+    while(tmp) {
+        if(tmp->address == oldptr) {
+            tmp->address = newptr;
+            sprintf(tmp->comment,"%s", comment);
+            tmp->size = newsize;
+            return 1;
+        }
+        tmp = tmp->next;
     }
     return 0;
 }
@@ -76,4 +90,14 @@ static size_t totalMemoryAllocate(list *head) {
         head = head->next;
     }
     return max;
+}
+
+void* my_realloc(void *ptr, size_t newsize, const char *file, int line, const char *func) {
+    void *oldptr = ptr;
+    ptr = realloc(ptr, newsize);
+    char coment[64] = {0};
+    sprintf (coment,"Reallocated = %s, %i, %s, %p[%li]", file, line, func, ptr, newsize);
+    update_block(oldptr,ptr,newsize,coment);
+    
+    return ptr;
 }

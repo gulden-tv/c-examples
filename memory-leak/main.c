@@ -9,15 +9,17 @@ int main(void) {
     *p = 5;
     free(p);
     p = malloc(sizeof(int));
-    
+    p = realloc(p, sizeof(int)*2);
     for(int i = 0; i<5; i++) {
         p = malloc( sizeof(int) * i*i*i );
         if(i%2) {
             free(p);
         }
     }
+    
+    
 
-    free(p); // try to comment this and uncomment
+    //free(p); // try to comment this and uncomment
     printMemoryLeak();
     return 0;
 }
