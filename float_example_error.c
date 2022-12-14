@@ -13,7 +13,7 @@ void color(uint32_t color) {
 }
 
 //Перевод вещетсвенного числа в двоичный вид
-void print_float_bin(float *num) {
+void print_float_bin(void *num) {
     uint32_t *fi = num;
     //memcpy(&fi, &num, 4); //копируем память
     for(int32_t i=31; i>=0; i--) {
@@ -37,14 +37,20 @@ int main()
     float f1 = 1.0;
     
     
-    print_float_bin(&f);
-    printf("\n");
-    print_float_bin(&f1);
-    printf("\n");
+    //print_float_bin(&f);
+    //printf("\n");
+    //print_float_bin(&f1);
+    //printf("\n");
+    
+    for(int i=0; i<10; i++)
+        f1 += 0.1;
     
     printf("f = %f f1 = %f\n",f,f1);
     
-    if( fabs(f-f1) < 0.00001 )
+    for(int i=0; i<10; i++)
+        f1 += 0.1;
+    
+    if( f == f1 )
         printf("Yes\n");
     else
         printf("No\n");
